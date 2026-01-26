@@ -26,7 +26,7 @@ bool CheckIPSValidity(std::vector<uint8_t> ipsData)
 	//todo: check valid max length
 	if (ipsData.size() >= 8)
 	{
-		// Check boundaries
+		// Check header/footer
 		if (ipsData[0] == 'P' &&
 			ipsData[1] == 'A' &&
 			ipsData[2] == 'T' &&
@@ -44,10 +44,12 @@ bool CheckIPSValidity(std::vector<uint8_t> ipsData)
 }
 
 
+// Apply the IPS patch to the file data
 bool ApplyIPSPatch(std::vector<uint8_t>& fileData, const std::vector<uint8_t>& ipsData)
 {
 	size_t i = IPS_HEADER_SIZE, ipsSize = ipsData.size();
 
+	// Process each patch record
 	while (i + 3 <= ipsSize) {
 
 		// Check for EOF marker
@@ -67,8 +69,8 @@ bool ApplyIPSPatch(std::vector<uint8_t>& fileData, const std::vector<uint8_t>& i
 		uint16_t size = (ipsData[i++] << 8) | ipsData[i++];
 
 		if (size == 0) { // RLE
-
-			if (ipsSize < i + 3) // RLE size is 2 bytes + 1 byte value
+			// RLE size is 2 bytes + 1 byte value
+			if (ipsSize < i + 3)
 				return false; //Unexpected end of patch file
 
 			uint16_t rleSize = (ipsData[i++] << 8) | ipsData[i++];
@@ -82,7 +84,7 @@ bool ApplyIPSPatch(std::vector<uint8_t>& fileData, const std::vector<uint8_t>& i
 			std::fill_n(fileData.begin() + offset, rleSize, rleValue);
 		}
 		else { // Non-RLE
-
+			// size bytes of data
 			if (ipsSize < i + size)
 				return false; //Unexpected end of patch file
 
@@ -99,6 +101,8 @@ bool ApplyIPSPatch(std::vector<uint8_t>& fileData, const std::vector<uint8_t>& i
 	return true;
 }
 
+
+// Output the patched file to disk
 bool OutputPatchedFile(const std::string& outPath, const std::vector<uint8_t>& fileData)
 {
 	// Create the output stream
@@ -126,8 +130,6 @@ bool OutputPatchedFile(const std::string& outPath, const std::vector<uint8_t>& f
 
 bool PatchFile(std::string filePath, std::string ipsPath, std::string outPath)
 {
-	uint8_t buf;
-
 	std::ifstream inFile(filePath, std::ios::binary);
 	std::ifstream inIPS(ipsPath, std::ios::binary);
 	
