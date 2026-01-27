@@ -6,6 +6,7 @@ IPSPatcherUI::IPSPatcherUI(QWidget *parent)
     : QWidget(parent)
 {
     ui.setupUi(this);
+    ui.filePath->setFocus();
 
     connect(ui.fileBrowseBtn, &QPushButton::clicked, this, &IPSPatcherUI::OnBtnClickedFileBrowse);
     connect(ui.ipsBrowseBtn, &QPushButton::clicked, this, &IPSPatcherUI::OnBtnClickedIPSBrowse);
