@@ -7,13 +7,30 @@ int main(int argc, char* argv[])
 {
     // We can also expect the file to be patched, the IPS file, and optionally 
     // the output file path
-    if (argc == 4)
+    if (argc == 3 || argc == 4)
     {
         const std::string filePath = argv[1];
         const std::string ipsPath = argv[2];
-        const std::string outPath = argv[3];
+        std::string outPath = "";
 
-        if (PatchFile(filePath, ipsPath, outPath))
+        if (argc == 3)
+        {
+            outPath = filePath;
+        }
+        else
+        {
+			outPath = argv[3];
+		}
+
+        bool result = false;
+
+		// If no output path is given, overwrite the input file
+        if (outPath.empty())
+            result = PatchFile(filePath, ipsPath, filePath);
+        else
+            result = PatchFile(filePath, ipsPath, outPath);
+
+        if (result)
         {
             printf("Patching completed successfully.\n");
             std::fflush(NULL);
