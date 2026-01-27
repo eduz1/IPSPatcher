@@ -15,13 +15,15 @@ int main(int argc, char* argv[])
 
         if (PatchFile(filePath, ipsPath, outPath))
         {
-            printf("Patching completed successfully.");
-            return 1;
+            printf("Patching completed successfully.\n");
+            std::fflush(NULL);
+            return 0;
         }
         else
         {
-			printf("Patching failed.");
-            return 0;
+			printf("Patching failed.\n");
+            std::fflush(NULL);
+            return 1;
         }
     }
 
