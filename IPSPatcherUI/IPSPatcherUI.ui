@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>IPSPatcher</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>favico.ico</normaloff>favico.ico</iconset>
-  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
