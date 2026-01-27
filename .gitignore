@@ -54,9 +54,7 @@ compile_commands.json
 *_qmlcache.qrc
 
 /.vs/*
-/IPSPatcherCore/x64/Debug
-/IPSPatcherUI/x64/Debug
-/x64/Debug
+/IPSPatcherCore/x64/*
+/IPSPatcherUI/x64/*
+/x64/*
 *.user
-
-mmm
