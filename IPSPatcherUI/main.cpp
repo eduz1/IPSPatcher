@@ -32,14 +32,12 @@ int main(int argc, char* argv[])
 
         if (result)
         {
-            printf("Patching completed successfully.\n");
-            std::fflush(NULL);
+			qInfo() << "Patching completed successfully.";
             return 0;
         }
         else
         {
-			printf("Patching failed.\n");
-            std::fflush(NULL);
+			qInfo() << "Patching failed.";
             return 1;
         }
     }
