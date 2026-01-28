@@ -1,6 +1,8 @@
-![UI Program](/images/ui.png)
-
 # IPSPatcher
+
+<p align="center">
+  <img src="/images/ui.png" alt="UI Program">
+</p>
 
 `IPSPatcher` is a small Qt-based tool to apply `.ips` patches to files.
 
