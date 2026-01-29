@@ -3,14 +3,13 @@
 #include "IPSPatcherCore.h"
 
 #include <QtWidgets/QApplication>
-#include <QCoreApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
 int main(int argc, char* argv[])
 {
-    // Use Q(Core)Application just for parsing first
-    QCoreApplication coreApp(argc, argv);
+    // Single application instance for both GUI and CLI
+    QApplication app(argc, argv);
     QCoreApplication::setApplicationName("IPSPatcher");
 
     QCommandLineParser parser;
@@ -23,14 +22,13 @@ int main(int argc, char* argv[])
     parser.addPositionalArgument("patch",  "IPS patch file");
     parser.addPositionalArgument("output", "Optional output file (defaults to input)", "[output]");
 
-    parser.process(coreApp);
+    parser.process(app);
 
     const QStringList positionalArgs = parser.positionalArguments();
 
     // No positional args -> start GUI mode
     if (positionalArgs.isEmpty())
     {
-        QApplication app(argc, argv);
         IPSPatcherUI window;
         window.show();
         return app.exec();
@@ -44,10 +42,10 @@ int main(int argc, char* argv[])
 
     const std::string filePath = positionalArgs.at(0).toStdString();
     const std::string ipsPath  = positionalArgs.at(1).toStdString();
-	// If no output path is given, overwrite the input file
-    const std::string outPath  = (positionalArgs.size() == 3) ? positionalArgs.at(2).toStdString() : filePath;
+    const std::string outPath  = (positionalArgs.size() == 3)
+        ? positionalArgs.at(2).toStdString()
+        : filePath; // overwrite input by default
 
-    // If no output path is given, overwrite the input file (same behavior as before)
     const bool result = PatchFile(filePath, ipsPath, outPath);
 
     qInfo() << (result ? "Patching completed successfully." : "Patching failed.");
