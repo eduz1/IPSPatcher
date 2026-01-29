@@ -7,4 +7,5 @@
   <Project Path="IPSPatcherUI/IPSPatcherUI.vcxproj" Id="4b8e793d-119d-49ef-9d7e-1f7e616502b4">
     <Platform Project="x64" />
   </Project>
+  <Project Path="Tests/Tests.vcxproj" Id="5d0f2908-647e-4ae6-949e-c135d6b73861" />
 </Solution>

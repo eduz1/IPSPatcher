@@ -58,7 +58,7 @@ bool ApplyIPSPatch(std::vector<uint8_t>& fileData, const std::vector<uint8_t>& i
 			ipsData[i + 2] == 'F')
 		{
 			// Reached end of patch records
-			break;
+			return true;
 		}
 
 		// offset is 3 bytes + 2 bytes for size
@@ -98,7 +98,8 @@ bool ApplyIPSPatch(std::vector<uint8_t>& fileData, const std::vector<uint8_t>& i
 		}
 	}
 
-	return true;
+	// Early exit?
+	return false;
 }
 
 

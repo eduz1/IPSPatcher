@@ -58,3 +58,5 @@ compile_commands.json
 /IPSPatcherUI/x64/*
 /x64/*
 *.user
+/Tests/x64/*
+/packages/*
